@@ -1,3 +1,7 @@
+##################################
+#This code is for cropping images#
+##################################
+
 from PIL import Image
 from tkinter import *
 from PIL import Image
