@@ -17,24 +17,24 @@ def image_crop(save_path):
     if len(path) > 0:
 
         img = Image.open(path)
-        (img_h,img_w) = img.size
-        grid_w = img_h
-        grid_h = 100
+        (img_w,img_h) = img.size
+        grid_w = img_w
+        grid_h = 500
         range_w = (int)(img_w/grid_w)
         range_h = (int)(img_h/grid_h)
+        
         
         i = 0
 
         for w in range(range_w):
             for h in range(range_h):
                 bbox = (w*grid_w, h*grid_h-(0.6*grid_h), (w+1)*(grid_w), (h+1)*(grid_h))
-                #the reason why i code like the above is that the width is fixed
                 crop_img = img.crop(bbox)
                 fname = "{}.jpg".format(i)
                 savename = save_path + fname
                 crop_img.save(savename)
                 print('save file -> ' + savename + ' ...')
-                i += 1
+                i += 1              
 
 #pick directory for saving crop images
 #pick image file for crop
