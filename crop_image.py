@@ -2,24 +2,30 @@
 #This code is for cropping images#
 ##################################
 
+import tkinter.filedialog
+import os
+
 from PIL import Image
 from tkinter import *
 from PIL import Image
 from PIL import ImageTk
-import tkinter.filedialog
 
-
-#setup for cropping image
 def image_crop(save_path):
+    
+    global origin_image
    
     path = tkinter.filedialog.askopenfilename()
+    
+    origin_image = path
    
     if len(path) > 0:
 
+        h_get = int(score.get())
+        
         img = Image.open(path)
         (img_w,img_h) = img.size
-        grid_w = img_w
-        grid_h = 500
+        grid_w = img_w #width are fixed
+        grid_h = h_get #put numbers for cropping image's height
         range_w = (int)(img_w/grid_w)
         range_h = (int)(img_h/grid_h)
         
@@ -35,24 +41,25 @@ def image_crop(save_path):
                 crop_img.save(savename)
                 print('save file -> ' + savename + ' ...')
                 i += 1              
-
-#pick directory for saving crop images
-#pick image file for crop
 def crop():
     loc = tkinter.filedialog.askdirectory()
     path, dirs, files = next(os.walk(loc))
     image_crop(path+'/')
+    score.delete(0,END)
 
-
-#initializing toolkit, interface of gui
+#interface in gui
 win = Tk()
 win.title("CROP")
-win.geometry("200x50")
+win.geometry("200x120")
 
-#buttons for gui
+# button the GUI
 btn = Button(win, text = "Select an image for Crop", command = crop)
-btn.pack(side="bottom", fill="both", expand="yes", padx="10", pady="10")
+btn.pack(side="bottom", fill="none", expand="yes", padx="10", pady="10")
+score = Entry(win)
+score.pack(side="bottom", fill="none", expand="yes", padx="10", pady="10")
+Label(win,text = "* Input height for Crop Images *").pack(side="bottom", fill="both", expand="yes", padx="10", pady="10")
 
-#kick off the gui
+
+#kick off the GUI
 win.mainloop()
 
